@@ -19,89 +19,100 @@ class baseMainWindow(wx.Frame):
 
     def __init__(self, parent):
         wx.Frame.__init__(self, parent, id=wx.ID_ANY, title=u"万年历_version1", pos=wx.DefaultPosition,
-                          size=wx.Size(1195, 514), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
+                          size=wx.Size(879, 514), style=wx.DEFAULT_FRAME_STYLE | wx.TAB_TRAVERSAL)
 
         self.SetSizeHints(wx.DefaultSize, wx.DefaultSize)
         self.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INFOTEXT))
         self.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHTTEXT))
 
-        fgSizer3 = wx.FlexGridSizer(4, 1, 0, 0)
+        fgSizer3 = wx.FlexGridSizer(5, 1, 0, 0)
         fgSizer3.SetFlexibleDirection(wx.BOTH)
         fgSizer3.SetNonFlexibleGrowMode(wx.FLEX_GROWMODE_SPECIFIED)
 
-        self.title = wx.StaticText(self, wx.ID_ANY, u"万年历", wx.Point(-1, -1), wx.DefaultSize, wx.ALIGN_CENTRE)
+        self.title = wx.StaticText(self, wx.ID_ANY, u"万年历\n（1970-2099）", wx.Point(-1, -1), wx.DefaultSize,
+                                   wx.ALIGN_CENTRE)
         self.title.Wrap(-1)
         self.title.SetFont(wx.Font(23, 70, 90, 90, False, wx.EmptyString))
 
         fgSizer3.Add(self.title, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
-        bSizer4 = wx.BoxSizer(wx.HORIZONTAL)
+        sbSizer1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, wx.EmptyString), wx.HORIZONTAL)
 
-        self.text_year = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size(-1, -1), 0)
-        bSizer4.Add(self.text_year, 1, wx.ALIGN_CENTER_VERTICAL, 5)
+        self.text_year = wx.TextCtrl(sbSizer1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition,
+                                     wx.Size(-1, -1), 0)
+        sbSizer1.Add(self.text_year, 1, wx.ALIGN_CENTER_VERTICAL, 5)
 
-        self.m_staticText54 = wx.StaticText(self, wx.ID_ANY, u"年", wx.DefaultPosition, wx.Size(-1, -1), 0)
+        self.m_staticText54 = wx.StaticText(sbSizer1.GetStaticBox(), wx.ID_ANY, u"年", wx.DefaultPosition,
+                                            wx.Size(-1, -1), 0)
         self.m_staticText54.Wrap(-1)
         self.m_staticText54.SetFont(wx.Font(20, 70, 93, 90, False, wx.EmptyString))
 
-        bSizer4.Add(self.m_staticText54, 1, wx.ALL, 5)
+        sbSizer1.Add(self.m_staticText54, 1, wx.ALL, 5)
 
-        self.text_month = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size(-1, -1), 0)
-        bSizer4.Add(self.text_month, 1, wx.ALL, 5)
+        self.text_month = wx.TextCtrl(sbSizer1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition,
+                                      wx.Size(-1, -1), 0)
+        sbSizer1.Add(self.text_month, 1, wx.ALL, 5)
 
-        self.m_staticText56 = wx.StaticText(self, wx.ID_ANY, u"月", wx.DefaultPosition, wx.Size(-1, -1), 0)
+        self.m_staticText56 = wx.StaticText(sbSizer1.GetStaticBox(), wx.ID_ANY, u"月", wx.DefaultPosition,
+                                            wx.Size(-1, -1), 0)
         self.m_staticText56.Wrap(-1)
         self.m_staticText56.SetFont(wx.Font(20, 70, 93, 90, False, wx.EmptyString))
 
-        bSizer4.Add(self.m_staticText56, 1, wx.ALL, 5)
+        sbSizer1.Add(self.m_staticText56, 1, wx.ALL, 5)
 
-        self.text_day = wx.TextCtrl(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size(-1, -1), 0)
-        bSizer4.Add(self.text_day, 1, wx.ALL, 5)
+        self.text_day = wx.TextCtrl(sbSizer1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition,
+                                    wx.Size(-1, -1), 0)
+        sbSizer1.Add(self.text_day, 1, wx.ALL, 5)
 
-        self.m_staticText57 = wx.StaticText(self, wx.ID_ANY, u"日", wx.DefaultPosition, wx.Size(-1, -1), 0)
+        self.m_staticText57 = wx.StaticText(sbSizer1.GetStaticBox(), wx.ID_ANY, u"日", wx.DefaultPosition,
+                                            wx.Size(-1, -1), 0)
         self.m_staticText57.Wrap(-1)
         self.m_staticText57.SetFont(wx.Font(20, 70, 93, 90, False, wx.EmptyString))
 
-        bSizer4.Add(self.m_staticText57, 1, wx.ALL, 5)
+        sbSizer1.Add(self.m_staticText57, 1, wx.ALL, 5)
 
-        fgSizer3.Add(bSizer4, 1, wx.EXPAND, 5)
+        fgSizer3.Add(sbSizer1, 1, wx.EXPAND, 5)
 
         self.button1 = wx.Button(self, wx.ID_ANY, u"查询", wx.Point(1000, 1000), wx.Size(-1, -1), 0)
         self.button1.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_HIGHLIGHT))
 
         fgSizer3.Add(self.button1, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
 
+        sbSizer2 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, u"label"), wx.HORIZONTAL)
+
+        self.weekday_0 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周日", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_0.Wrap(-1)
+        sbSizer2.Add(self.weekday_0, 1, wx.ALL, 5)
+
+        self.weekday_1 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周一", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_1.Wrap(-1)
+        sbSizer2.Add(self.weekday_1, 1, wx.ALL, 5)
+
+        self.weekday_2 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周二", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_2.Wrap(-1)
+        sbSizer2.Add(self.weekday_2, 1, wx.ALL, 5)
+
+        self.weekday_3 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周三", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_3.Wrap(-1)
+        sbSizer2.Add(self.weekday_3, 1, wx.ALL, 5)
+
+        self.weekday_4 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周四", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_4.Wrap(-1)
+        sbSizer2.Add(self.weekday_4, 1, wx.ALL, 5)
+
+        self.weekday_5 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周五", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_5.Wrap(-1)
+        sbSizer2.Add(self.weekday_5, 1, wx.ALL, 5)
+
+        self.weekday_6 = wx.StaticText(sbSizer2.GetStaticBox(), wx.ID_ANY, u"周六", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.weekday_6.Wrap(-1)
+        sbSizer2.Add(self.weekday_6, 1, wx.ALL, 5)
+
+        fgSizer3.Add(sbSizer2, 1, wx.EXPAND, 5)
+
         gSizer1 = wx.GridSizer(7, 7, 0, 0)
 
         gSizer1.SetMinSize(wx.Size(1200, 500))
-        self.weekday_0 = wx.StaticText(self, wx.ID_ANY, u"周日", wx.Point(1, 0), wx.DefaultSize, 0)
-        self.weekday_0.Wrap(-1)
-        gSizer1.Add(self.weekday_0, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.weekday_1 = wx.StaticText(self, wx.ID_ANY, u"周一", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.weekday_1.Wrap(-1)
-        gSizer1.Add(self.weekday_1, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.weekday_2 = wx.StaticText(self, wx.ID_ANY, u"周二", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.weekday_2.Wrap(-1)
-        gSizer1.Add(self.weekday_2, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.weekday_3 = wx.StaticText(self, wx.ID_ANY, u"周三", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.weekday_3.Wrap(-1)
-        gSizer1.Add(self.weekday_3, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.weekday_4 = wx.StaticText(self, wx.ID_ANY, u"周四", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.weekday_4.Wrap(-1)
-        gSizer1.Add(self.weekday_4, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.weekday_5 = wx.StaticText(self, wx.ID_ANY, u"周五", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.weekday_5.Wrap(-1)
-        gSizer1.Add(self.weekday_5, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
-        self.weekday_6 = wx.StaticText(self, wx.ID_ANY, u"周六", wx.DefaultPosition, wx.DefaultSize, 0)
-        self.weekday_6.Wrap(-1)
-        gSizer1.Add(self.weekday_6, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL, 5)
-
         self.days_1 = wx.StaticText(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
         self.days_1.Wrap(-1)
         gSizer1.Add(self.days_1, 0, wx.ALL, 5)
@@ -170,13 +181,13 @@ class baseMainWindow(wx.Frame):
         self.days_17.Wrap(-1)
         gSizer1.Add(self.days_17, 0, wx.ALL, 5)
 
-        self.days_18 = wx.StaticText(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
-        self.days_18.Wrap(-1)
-        gSizer1.Add(self.days_18, 0, wx.ALL, 5)
-
         self.days_19 = wx.StaticText(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
         self.days_19.Wrap(-1)
         gSizer1.Add(self.days_19, 0, wx.ALL, 5)
+
+        self.days_18 = wx.StaticText(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
+        self.days_18.Wrap(-1)
+        gSizer1.Add(self.days_18, 0, wx.ALL, 5)
 
         self.days_20 = wx.StaticText(self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
         self.days_20.Wrap(-1)
@@ -270,7 +281,7 @@ class baseMainWindow(wx.Frame):
         self.days_42.Wrap(-1)
         gSizer1.Add(self.days_42, 0, wx.ALL, 5)
 
-        fgSizer3.Add(gSizer1, 0, wx.ALL, 5)
+        fgSizer3.Add(gSizer1, 0, wx.EXPAND, 5)
 
         self.SetSizer(fgSizer3)
         self.Layout()
@@ -279,11 +290,14 @@ class baseMainWindow(wx.Frame):
         self.menuItem_info = wx.MenuItem(self.menu_menu, wx.ID_ANY, u"说明", wx.EmptyString, wx.ITEM_NORMAL)
         self.menu_menu.Append(self.menuItem_info)
 
+        self.menu_updateinfo = wx.MenuItem(self.menu_menu, wx.ID_ANY, u"更新说明", wx.EmptyString, wx.ITEM_NORMAL)
+        self.menu_menu.Append(self.menu_updateinfo)
+
         self.menubar1.Append(self.menu_menu, u"菜单")
 
         self.SetMenuBar(self.menubar1)
 
-        self.statusBar1 = self.CreateStatusBar(1,0, wx.ID_ANY)
+        self.statusBar1 = self.CreateStatusBar(1, 0, wx.ID_ANY)
 
         self.Centre(wx.BOTH)
 

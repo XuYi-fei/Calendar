@@ -2,6 +2,7 @@
 import wx
 import basewin
 from window_info import *
+from window_update_info import *
 import calendar
 import time
 # 首先，咱们从刚刚源文件中将主窗体继承下来.就是修改过name属性的主窗体咯。
@@ -27,8 +28,9 @@ class MainWindow(basewin.baseMainWindow):
 
     def bind_menu_items(self):
         self.Bind(wx.EVT_MENU, self.bind_menu_info, self.menuItem_info)
+        self.Bind(wx.EVT_MENU, self.bind_menu_update_info,self.menu_updateinfo)
         # self.menuItem_info.
-        pass
+        return
 
     def bind_menu_info(self,event):
         app = wx.App()
@@ -36,11 +38,16 @@ class MainWindow(basewin.baseMainWindow):
         window_Infomation.Show()
         # main_win.Show()
         app.MainLoop()
+        return
+
+    def bind_menu_update_info(self,event):
+        app = wx.App()
+        window_update = window_update_info(None)
+        window_update.Show()
+        app.MainLoop()
+        return
 
 
-    # 将点击按钮清空文本框的,功能写成函数
-    def sayhello(self,event):
-        print("hello")
 
     def main_button_click(self, event):
         # print(self.text_year.Value,self.text_month.Value,self.text_day.Value)
@@ -53,14 +60,20 @@ class MainWindow(basewin.baseMainWindow):
             print("year error")
             self.text_year.SetValue(self.today_year)
             text_year_Value = self.today_year
-            year = eval(text_year_Value)
+            try:
+                year = eval(text_year_Value)
+            except:
+                year = eval(text_year_Value.lstrip('0'))
 
         month = eval(text_month_Value)
         if not isinstance(month, int) or month <= 0 or month > 12:
             print("month error")
             self.text_month.SetValue(self.today_month)
             text_month_Value = self.today_month
-            month = eval(text_month_Value)
+            try:
+                month = eval(text_month_Value)
+            except:
+                month = eval(text_month_Value.lstrip('0'))
 
         month_str = str(month)
         day = eval(text_day_Value)
@@ -68,18 +81,17 @@ class MainWindow(basewin.baseMainWindow):
             print("day error")
             self.text_day.SetValue(self.today)
             text_day_Value =self.today
-            day = eval(text_day_Value)
+            try:
+                day = eval(text_day_Value)
+            except:
+                day = eval(text_year_Value.lstrip('0'))
 
         date = (year, month,day,0,0,0)
         # print(date)
         month_date = calendar.timegm(date)
 
         t = time.strftime("%Y-%m-%d-%a-%H-%M-%S",time.localtime(month_date))
-        mark = "self.days_"
-        for i in range(1,8):
-            eval(mark+str(i)).SetLabel(" ")
-        for i in range(28,43):
-            eval(mark + str(i)).SetLabel(" ")
+
         self.deal_times(t)
         return
         # self.text_main.Clear()
@@ -88,7 +100,11 @@ class MainWindow(basewin.baseMainWindow):
 
     def deal_times(self,t):
         # 获取时间并且打印在static_text上
-        # print(t)
+        # print
+        mark = "self.days_"
+        for i in range(1,43):
+            eval(mark+str(i)).SetLabel(" ")
+            eval(mark+str(i)).SetFont(wx.Font( 20, 70, 93, 90, False, "宋体" ))
         time_str = t.split('-')
         year, month, today, weekday, hour, minute, sec = time_str[0],time_str[1],time_str[2],time_str[3],time_str[4],time_str[5],time_str[6]
         days = self.month[month]
@@ -99,10 +115,12 @@ class MainWindow(basewin.baseMainWindow):
         self.text_year.SetValue(year)
         self.text_month.SetValue(month)
         self.text_day.SetValue(today)
-        # self.text_year.Se
+        today = int(today.lstrip('0'))
         for i in range(1,days+1):
             mark_day = mark+str(i+begin_weekday)
             eval(mark_day).SetLabel(str(i))
+            if i == today:
+                eval(mark_day).SetFont(wx.Font( 20, 70, 93, 92, True, "宋体" ))
 
 
     def convert_days(self,today,time_str):
