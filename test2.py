@@ -1,29 +1,45 @@
+# 鼠标事件处理
+
 import wx
 
 
+# 自定义窗口类MyFrame
 class MyFrame(wx.Frame):
+    def __init__(self):
+        super().__init__(parent=None, title="一对多事件处理", size=(400, 300))
+        self.Centre()  # 设置窗口居中
 
-    def __init__(self, parent, id):
-        wx.Frame.__init__(self, parent, id, u'测试面板Panel', size=(600, 300))
+        self.Bind(wx.EVT_LEFT_DOWN, self.on_left_down)
+        self.Bind(wx.EVT_LEFT_UP, self.on_left_up)
+        self.Bind(wx.EVT_MOTION, self.on_mouse_move)
 
-        # 创建面板
-        panel = wx.Panel(self)
+    def on_left_down(self, event):
+        print('鼠标按下')
 
-        # 在Panel上添加Button
-        button = wx.Button(panel, label=u'关闭', pos=(150, 60), size=(100, 60))
+    def on_left_up(self, event):
+        print('鼠标释放')
 
-        # 绑定单击事件
-        self.Bind(wx.EVT_BUTTON, self.OnCloseMe, button)
+    def on_mouse_move(self, event):
+        print('鼠标移动')
+        if event.Dragging() and event.LeftIsDown():
+            # 鼠标正在移动，按左键移动
+            pos = event.GetPosition()  # 取出位置
+            print(pos)
 
-    def OnCloseMe(self, event):
-        dlg = wx.MessageDialog(None, u"消息对话框测试", u"标题信息", wx.YES_NO | wx.ICON_QUESTION)
-        if dlg.ShowModal() == wx.ID_YES:
-            self.Close(True)
-        dlg.Destroy()
+
+# 自定义应用程序对象
+class App(wx.App):
+    def OnInit(self):
+        # 创建窗口对象
+        frame = MyFrame()
+        frame.Show()
+        return True
+
+    def OnExit(self):
+        print('应用程序退出')
+        return 0
 
 
 if __name__ == '__main__':
-    app = wx.PySimpleApp()
-    frame = MyFrame(parent=None, id=-1)
-    frame.Show()
-    app.MainLoop()
+    app = App()  # 调用上面函数
+    app.MainLoop()  # 进入主事件循环

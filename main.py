@@ -50,47 +50,48 @@ class MainWindow(basewin.baseMainWindow):
 
 
     def main_button_click(self, event):
-        # print(self.text_year.Value,self.text_month.Value,self.text_day.Value)
+        text_year_Value = self.text_year.Value
+        text_month_Value = self.text_month.Value
+        text_day_Value = self.text_day.Value
+        text_availabel = ['0','1','2','3','4','5','6','7','8','9']
+        # flag 判断是否有不是正整数的输入
+        flag = False
+        for i in [text_year_Value,text_day_Value,text_month_Value]:
+            for j in i:
+                if j not in text_availabel:
+                    flag = True
+
         text_year_Value = self.text_year.Value.lstrip('0')
         text_month_Value = self.text_month.Value.lstrip('0')
         text_day_Value = self.text_day.Value.lstrip('0')
 
-        year = eval(text_year_Value)
-        if not isinstance(year,int) or year <= 1969 or year >= 2099:
+        if not flag:
+            year = eval(text_year_Value)
+            month = eval(text_month_Value)
+            day = eval(text_day_Value)
+            if year <= 1969 or year >= 2099 or month <= 0 or month > 12:
+                flag = True
+            month_str = str(month)
+            if not flag:
+                if day <= 0 or day > self.month[month_str]:
+                    flag = True
+
+        if flag:
             self.text_year.SetValue(self.today_year)
-            text_year_Value = self.today_year
-            try:
-                year = eval(text_year_Value)
-            except:
-                year = eval(text_year_Value.lstrip('0'))
+            self.text_day.SetValue(self.today)
+            self.text_month.SetValue(self.today_month)
+            text_year_Value, text_month_Value, text_day_Value = self.today_year, self.today_month, self.today
+            year = eval(text_year_Value.lstrip('0'))
+            month = eval(text_month_Value.lstrip('0'))
+            day = eval(text_day_Value.lstrip('0'))
             self.OnCloseMe()
 
-        month = eval(text_month_Value)
-        if not isinstance(month, int) or month <= 0 or month > 12:
-            self.text_month.SetValue(self.today_month)
-            text_month_Value = self.today_month
-            try:
-                month = eval(text_month_Value)
-            except:
-                month = eval(text_month_Value.lstrip('0'))
-
-
-        month_str = str(month)
-        day = eval(text_day_Value)
-        if not isinstance(day, int) or day <= 0 or day > self.month[month_str]:
-            self.text_day.SetValue(self.today)
-            text_day_Value =self.today
-            try:
-                day = eval(text_day_Value)
-            except:
-                day = eval(text_year_Value.lstrip('0'))
 
         date = (year, month,day,0,0,0)
 
         month_date = calendar.timegm(date)
 
         t = time.strftime("%Y-%m-%d-%a-%H-%M-%S",time.localtime(month_date))
-
         self.deal_times(t)
         return
 
