@@ -27,7 +27,7 @@ class window_update_info(wx.Frame):
 
         gSizer3 = wx.GridSizer(0, 1, 0, 0)
 
-        self.m_staticText58 = wx.StaticText(self, wx.ID_ANY, u"此次更新优化了：\n1.缩放窗口的不一致问题\n2.年份的限定提示\n3.查询的日期当天会用下划线以及粗体标注",
+        self.m_staticText58 = wx.StaticText(self, wx.ID_ANY, u"此次更新优化了：\n1.输入不允许的日期会弹出阻塞窗口阻断\n以提示用户输入错误",
                                             wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_staticText58.Wrap(-1)
         self.m_staticText58.SetFont(wx.Font(16, 70, 90, 92, False, "宋体"))

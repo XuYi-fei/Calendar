@@ -26,7 +26,7 @@
         <property name="ui_table">UI</property>
         <property name="use_enum">0</property>
         <property name="use_microsoft_bom">0</property>
-        <object class="Frame" expanded="1">
+        <object class="Frame" expanded="0">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg">wxSYS_COLOUR_HIGHLIGHTTEXT</property>
@@ -5031,7 +5031,7 @@
                 <event name="OnUpdateUI"></event>
             </object>
         </object>
-        <object class="Frame" expanded="0">
+        <object class="Frame" expanded="1">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg">wxSYS_COLOUR_HIGHLIGHTTEXT</property>
@@ -5093,7 +5093,7 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxGridSizer" expanded="0">
+            <object class="wxGridSizer" expanded="1">
                 <property name="cols">1</property>
                 <property name="hgap">0</property>
                 <property name="minimum_size"></property>
@@ -5133,7 +5133,7 @@
                         <property name="gripper">0</property>
                         <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
-                        <property name="label">这是万年历version1.1&#x0A;    完成日期12.4</property>
+                        <property name="label">这是万年历version1.15&#x0A;    完成日期12.4</property>
                         <property name="max_size"></property>
                         <property name="maximize_button">0</property>
                         <property name="maximum_size"></property>
@@ -5186,7 +5186,7 @@
                 </object>
             </object>
         </object>
-        <object class="Frame" expanded="1">
+        <object class="Frame" expanded="0">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg">wxSYS_COLOUR_HIGHLIGHTTEXT</property>
@@ -5288,7 +5288,7 @@
                         <property name="gripper">0</property>
                         <property name="hidden">0</property>
                         <property name="id">wxID_ANY</property>
-                        <property name="label">此次更新优化了：&#x0A;1.缩放窗口的不一致问题&#x0A;2.年份的限定提示&#x0A;3.查询的日期当天会用下划线以及粗体标注</property>
+                        <property name="label">此次更新优化了：&#x0A;1.输入不允许的日期会弹出阻塞窗口阻断&#x0A;以提示用户输入错误</property>
                         <property name="max_size"></property>
                         <property name="maximize_button">0</property>
                         <property name="maximum_size"></property>

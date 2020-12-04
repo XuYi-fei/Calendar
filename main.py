@@ -57,17 +57,16 @@ class MainWindow(basewin.baseMainWindow):
 
         year = eval(text_year_Value)
         if not isinstance(year,int) or year <= 1969 or year >= 2099:
-            print("year error")
             self.text_year.SetValue(self.today_year)
             text_year_Value = self.today_year
             try:
                 year = eval(text_year_Value)
             except:
                 year = eval(text_year_Value.lstrip('0'))
+            self.OnCloseMe()
 
         month = eval(text_month_Value)
         if not isinstance(month, int) or month <= 0 or month > 12:
-            print("month error")
             self.text_month.SetValue(self.today_month)
             text_month_Value = self.today_month
             try:
@@ -75,10 +74,10 @@ class MainWindow(basewin.baseMainWindow):
             except:
                 month = eval(text_month_Value.lstrip('0'))
 
+
         month_str = str(month)
         day = eval(text_day_Value)
         if not isinstance(day, int) or day <= 0 or day > self.month[month_str]:
-            print("day error")
             self.text_day.SetValue(self.today)
             text_day_Value =self.today
             try:
@@ -87,16 +86,19 @@ class MainWindow(basewin.baseMainWindow):
                 day = eval(text_year_Value.lstrip('0'))
 
         date = (year, month,day,0,0,0)
-        # print(date)
+
         month_date = calendar.timegm(date)
 
         t = time.strftime("%Y-%m-%d-%a-%H-%M-%S",time.localtime(month_date))
 
         self.deal_times(t)
         return
-        # self.text_main.Clear()
-        # self.days_5.SetLabel("asdaasd")
-        # self.OnTimer(event)
+
+    def OnCloseMe(self):
+        dlg = wx.MessageDialog(None, u"输入日期有误或超出范围", u"报错消息", wx.OK)
+        if dlg.ShowModal() == wx.ID_YES:
+            self.Close(True)
+        dlg.Destroy()
 
     def deal_times(self,t):
         # 获取时间并且打印在static_text上
