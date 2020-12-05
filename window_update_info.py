@@ -25,7 +25,7 @@ class window_update_info ( wx.Frame ):
 
 		gSizer3 = wx.GridSizer( 0, 1, 0, 0 )
 
-		self.m_staticText58 = wx.StaticText( self, wx.ID_ANY, u"此次更新优化了：\n1.输入如果出现非数字字符也可以报错", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText58 = wx.StaticText( self, wx.ID_ANY, u"此次更新优化了：\n1.输入日期部分增加了下拉菜单\n2.增加退出键\n\nbug存在：\n1.如果输入有误有时不能自动回到\n有意义的输入而是变成空格等待用户", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText58.Wrap( -1 )
 
 		self.m_staticText58.SetFont( wx.Font( 16, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_BOLD, False, "宋体" ) )

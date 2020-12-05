@@ -1,45 +1,74 @@
-# 鼠标事件处理
-
 import wx
 
 
-# 自定义窗口类MyFrame
-class MyFrame(wx.Frame):
+class ComboBoxFrame(wx.Frame):
     def __init__(self):
-        super().__init__(parent=None, title="一对多事件处理", size=(400, 300))
-        self.Centre()  # 设置窗口居中
+        wx.Frame.__init__(self, None, -1, 'Combo Box Example', size=(350, 300))
+        panel = wx.Panel(self, -1)
+        sampleList = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight']
 
-        self.Bind(wx.EVT_LEFT_DOWN, self.on_left_down)
-        self.Bind(wx.EVT_LEFT_UP, self.on_left_up)
-        self.Bind(wx.EVT_MOTION, self.on_mouse_move)
+        flexSizer = wx.FlexGridSizer(4, 4, 6, 6)
+        flexSizer.AddGrowableCol(1)
+        flexSizer.AddGrowableCol(3)
 
-    def on_left_down(self, event):
-        print('鼠标按下')
+        # 定义普通样式的comboBox, 接受键盘输入，但不会改变Item
+        commonLable = wx.StaticText(panel, -1, "普通样式")
+        commonComboBox = wx.ComboBox(panel, -1, value="zero", choices=sampleList, style=wx.CB_DROPDOWN)
 
-    def on_left_up(self, event):
-        print('鼠标释放')
+        # 定义简单样式的ComboBox，
+        simpleLable = wx.StaticText(panel, -1, "简单样式:")
+        simpleComboBox = wx.ComboBox(panel, -1, value="zero", choices=sampleList, style=wx.CB_SIMPLE)
 
-    def on_mouse_move(self, event):
-        print('鼠标移动')
-        if event.Dragging() and event.LeftIsDown():
-            # 鼠标正在移动，按左键移动
-            pos = event.GetPosition()  # 取出位置
-            print(pos)
+        # 定义只读样式的ComboBox，
+        readonlyLable = wx.StaticText(panel, -1, "只读样式:")
+        readonlyComboBox = wx.ComboBox(panel, -1, value="zero", choices=sampleList, style=wx.CB_READONLY)
+
+        # 定义二级联动下拉列表
+        cityDict = {'安徽': ["合肥", "淮南"], "江苏": ["苏州", "南京"]}
+
+        # 定义第一级菜单
+        proviceLable = wx.StaticText(panel, -1, "省份:")
+        proviceComboBox = wx.ComboBox(panel, -1, value=cityDict.keys()[0], choices=cityDict.keys(),
+                                      style=wx.CB_READONLY)
+        # 定义第二级菜单
+        cityLable = wx.StaticText(panel, -1, "城市:")
+        cityComboBox = wx.ComboBox(panel, -1, value=cityDict[cityDict.keys()[0]][0],
+                                   choices=cityDict[cityDict.keys()[0]], style=wx.CB_READONLY)
+
+        flexSizer.AddMany([
+            (commonLable, 0, wx.SHAPED | wx.ALIGN_RIGHT), (commonComboBox, 1, wx.EXPAND),
+            (simpleLable, 0, wx.SHAPED | wx.ALIGN_RIGHT), (simpleComboBox, 1, wx.EXPAND)
+            , (readonlyLable, 0, wx.SHAPED | wx.ALIGN_RIGHT), (readonlyComboBox, 1, wx.EXPAND),
+            (wx.Size(6, 6), 0, wx.SHAPED | wx.ALIGN_RIGHT), (wx.Size(6, 6), 1, wx.EXPAND)
+            , (proviceLable, 0, wx.SHAPED | wx.ALIGN_RIGHT), (proviceComboBox, 1, wx.EXPAND),
+            (wx.Size(6, 6), 0, wx.SHAPED | wx.ALIGN_RIGHT), (wx.Size(6, 6), 1, wx.EXPAND)
+            , (cityLable, 0, wx.SHAPED | wx.ALIGN_RIGHT), (cityComboBox, 1, wx.EXPAND),
+            (wx.Size(6, 6), 0, wx.SHAPED | wx.ALIGN_RIGHT), (wx.Size(6, 6), 1, wx.EXPAND)
+        ])
+
+        panel.SetSizerAndFit(flexSizer)
+
+        # 定义 一级下拉列表切换时，刷新二级菜单项的响应事件
+        self.__ProvinceComboBox = proviceComboBox
+        self.__SecityDict = cityDict
+        self.__CityComboBox = cityComboBox
+        panel.Bind(wx.EVT_COMBOBOX, self.__OnComboBoxSelected, proviceComboBox, )
+
+    def __OnComboBoxSelected(self, event):
+        currentProvinceIndex = self.__ProvinceComboBox.GetSelection()
+        if wx.NOT_FOUND == currentProvinceIndex: return
+        value = self.__ProvinceComboBox.GetItems()[currentProvinceIndex]
+
+        # 注意中文在List dict 等存储时候, utf-8 格式不一致问题
+        value = value.encode('utf-8')
+
+        cityList = self.__SecityDict[value]
+        self.__CityComboBox.SetItems(cityList)
+        self.__CityComboBox.SetValue(cityList[0])
 
 
-# 自定义应用程序对象
-class App(wx.App):
-    def OnInit(self):
-        # 创建窗口对象
-        frame = MyFrame()
-        frame.Show()
-        return True
-
-    def OnExit(self):
-        print('应用程序退出')
-        return 0
-
-
-if __name__ == '__main__':
-    app = App()  # 调用上面函数
-    app.MainLoop()  # 进入主事件循环
+def main():
+    app = wx.PySimpleApp()
+    ComboBoxFrame().Show()
+    app.MainLoop()
+main()

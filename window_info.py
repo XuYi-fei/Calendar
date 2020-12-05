@@ -25,7 +25,7 @@ class window_info ( wx.Frame ):
 
 		gSizer4 = wx.GridSizer( 1, 1, 0, 0 )
 
-		self.m_staticText60 = wx.StaticText( self, wx.ID_ANY, u"这是万年历version1.20\n    完成日期12.4", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText60 = wx.StaticText( self, wx.ID_ANY, u"万年历version1.21\n    完成日期12.5", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText60.Wrap( -1 )
 
 		self.m_staticText60.SetFont( wx.Font( 25, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
